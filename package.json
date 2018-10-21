@@ -1,0 +1,29 @@
+{
+  "name": "speedruntimer",
+  "version": "0.0.1",
+  "description": "Simple Web App Stop Watch define a list of level or section you want to measure",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/dexta/speedruntimer.git"
+  },
+  "keywords": [
+    "speed",
+    "run",
+    "stopwatch",
+    "time",
+    "timer"
+  ],
+  "author": "dexta.de",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/dexta/speedruntimer/issues"
+  },
+  "homepage": "https://github.com/dexta/speedruntimer#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Timmer</title>
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/font-awesome.css">
+</head>
+<body>
+<div class="container">
+<timer name="Chapter 1 - Light World"></timer>
+<timer name="Chapter 2 - Light World"></timer>
+<timer name="Chapter 3 - Light World"></timer>
+</div>
+<!-- include extern librarys -->
+<script src="js/superagent.js"></script>
+<script src="js/riotux.js"></script>
+
+<!-- include components -->
+<script src="components/timer.tag" type="riot/tag"></script>
+
+<!-- include riot.js and the compiler -->
+<script src="js/riot+compiler.js"></script>
+
+<script type="text/javascript">
+  riot.mount('*');
+</script>
+</body>
+</html>
