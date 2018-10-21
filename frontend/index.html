@@ -3,28 +3,103 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Timmer</title>
+  <title>Timer</title>
+  <link rel="icon" href="img/favicon.ico">
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" href="css/font-awesome.css">
 </head>
 <body>
 <div class="container">
-<timer name="Chapter 1 - Light World"></timer>
-<timer name="Chapter 2 - Light World"></timer>
-<timer name="Chapter 3 - Light World"></timer>
+  <timer name="Chapter 1 - Light World"></timer>
+  <hr>
+  <timer name="Chapter 2 - Light World"></timer>
+  <hr>
+  <timer name="Chapter 3 - Light World"></timer>
+
+  <alltimer>      </alltimer>
 </div>
 <!-- include extern librarys -->
 <script src="js/superagent.js"></script>
 <script src="js/riotux.js"></script>
+<script src="js/riotrage.js"></script>
 
 <!-- include components -->
 <script src="components/timer.tag" type="riot/tag"></script>
+<script src="components/allTimer.tag" type="riot/tag"></script>
 
 <!-- include riot.js and the compiler -->
 <script src="js/riot+compiler.js"></script>
 
 <script type="text/javascript">
   riot.mount('*');
+  
+  let store = riotux.Store({
+    state: {
+      theme: 'SuperMeatBoy',
+      allTime: 0,
+      timerList: [
+        {id:'smbc1lw',name:'Chapter 1 - Light World',time:0,best:0},
+        {id:'smbc2lw',name:'Chapterz 2 - Light World',time:0,best:0},
+        {id:'smbc3lw',name:'Chapters 3 - Light World',time:0,best:0},
+      ]
+    },
+    mutations: {
+      loadTimerList: (store, themeName) => {
+        let fromLocal = JSON.parse(localStorage.getItem('SuperMeatBoy'));        
+        store.allTime = 0;
+        store.theme = themeName;
+        store.timerList = fromLocal.timerList;
+      },
+      saveTimerList: (store, state) => {
+        let toLocal = JSON.stringify({theme:state.theme,timerList:state.timerList});
+        localStorage.setItem(state.theme,toLocal);
+      },
+      updateById: (store, state, id, upObj) => {
+        for(let s in store.timerList) {
+          if(store.timerList[s].id===id) {
+            for(let u in upObj) {
+              store.timerList[s][u] = upObj[u];
+            }
+          break;
+          }
+        }
+      },
+      addAllTime: (state,timeToAdd) => {
+        state.allTime+= timeToAdd;
+      }
+    }
+  });
+
+
+  let action = riotux.Actions({
+    loadALL: (store, name) => {
+      store.dispatch('loadTimerList', name);
+    },
+    saveAll: (store) => {
+      store.dispatch('saveTimerList');
+    },
+    updateTimer: (store, updateObj) => {
+      store.dispatch('updateObj', updateObj);
+    }
+    // getList: ( store, state ) => {
+    //   if(state===undefined) return;
+    //   let baseString = (state.search.base||false)? state.search.base : '';
+    //   let searchText = encodeURIComponent(baseString + state.search.text);
+    //   let urlString = '/search/key/'+state.search.limit+'/'+searchText;
+    //   superagent('get',urlString).then( (res) => {
+    //     store.dispatch('setKVlist', res.body);
+    //     console.log("read kvlist done !!!");
+    //   });
+    // },
+    // getBaseList: (store, state, searchString) => {
+    //   let urlString = '/search/key/'+state.search.limit+'/'+encodeURIComponent(searchString);
+    //   superagent('get',urlString).then( (res) => {
+    //     store.dispatch('setBaseListMatrix', res.body);
+    //   });
+    // }
+  });
+  // riotux.action('timerList', 'saveAll');
+
 </script>
 </body>
 </html>
