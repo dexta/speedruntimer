@@ -44,21 +44,21 @@
       ]
     },
     mutations: {
-      loadTimerList: (store, themeName) => {
-        let fromLocal = JSON.parse(localStorage.getItem('SuperMeatBoy'));        
-        store.allTime = 0;
-        store.theme = themeName;
-        store.timerList = fromLocal.timerList;
+      loadTimerList: function(state, themeName) {
+        let fromLocal = JSON.parse(localStorage.getItem(themeName));        
+        state.allTime = 0;
+        state.theme = themeName;
+        state.timerList = fromLocal.timerList;
       },
-      saveTimerList: (store, state) => {
+      saveTimerList: (state) => {
         let toLocal = JSON.stringify({theme:state.theme,timerList:state.timerList});
         localStorage.setItem(state.theme,toLocal);
       },
-      updateById: (store, state, id, upObj) => {
-        for(let s in store.timerList) {
-          if(store.timerList[s].id===id) {
+      updateById: (state, id, upObj) => {
+        for(let s in state.timerList) {
+          if(state.timerList[s].id===id) {
             for(let u in upObj) {
-              store.timerList[s][u] = upObj[u];
+              state.timerList[s][u] = upObj[u];
             }
           break;
           }
@@ -72,7 +72,7 @@
 
 
   let action = riotux.Actions({
-    loadALL: (store, name) => {
+    loadAll: (store, name) => {
       store.dispatch('loadTimerList', name);
     },
     saveAll: (store) => {
