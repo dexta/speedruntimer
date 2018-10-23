@@ -7,11 +7,20 @@
 let that = this;
 this.listOfTimers = [];
 
-riotux.subscribe(that, 'timerList', ( state, state_value ) => {
+this.getListOfTimers = () => {
   that.listOfTimers = riotux.getter('timerList');
   that.update();
+}
+
+
+riotux.subscribe(that, 'timerList', ( state, state_value ) => {
+  that.getListOfTimers();
 });
 
+
+this.on('mount', () => {
+  that.getListOfTimers();
+});
 
 </script>
 

@@ -10,12 +10,12 @@
 </head>
 <body>
 <div class="container">
-  <timer name="Chapter 1 - Light World"></timer>
+<!--   <timer name="Chapter 1 - Light World"></timer>
   <hr>
   <timer name="Chapter 2 - Light World"></timer>
   <hr>
   <timer name="Chapter 3 - Light World"></timer>
-
+ -->
   <alltimer>      </alltimer>
 </div>
 <!-- include extern librarys -->
@@ -33,19 +33,24 @@
 <script type="text/javascript">
   riot.mount('*');
   
+  const defaultTimerList = {
+    theme: "SuperMeatBoy",
+    timerList: [
+      {id:'smbc1lw',name:'Chapter 1 - Light World',time:0,best:0},
+      {id:'smbc2lw',name:'Chapterz 2 - Light World',time:0,best:0},
+      {id:'smbc3lw',name:'Chapters 3 - Light World',time:0,best:0},
+    ]
+  };
+
   let store = riotux.Store({
     state: {
       theme: 'SuperMeatBoy',
       allTime: 0,
-      timerList: [
-        {id:'smbc1lw',name:'Chapter 1 - Light World',time:0,best:0},
-        {id:'smbc2lw',name:'Chapterz 2 - Light World',time:0,best:0},
-        {id:'smbc3lw',name:'Chapters 3 - Light World',time:0,best:0},
-      ]
+      timerList: []
     },
     mutations: {
-      loadTimerList: function(state, themeName) {
-        let fromLocal = JSON.parse(localStorage.getItem(themeName));        
+      loadTimerList: (state, themeName) => {
+        let fromLocal = (themeName||false)? JSON.parse(localStorage.getItem(themeName)) : defaultTimerList;
         state.allTime = 0;
         state.theme = themeName;
         state.timerList = fromLocal.timerList;
@@ -99,6 +104,7 @@
     // }
   });
   // riotux.action('timerList', 'saveAll');
+  riotux.action('timerList', 'loadAll');
 
 </script>
 </body>

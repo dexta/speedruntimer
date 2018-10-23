@@ -8,37 +8,54 @@
     <button onclick={stop} class="btn btn-danger">Stop</button>
   </div>
 </div>
-
+<hr>
 <script>
 let that = this;
 
 this.time = 0;
-this.intervalID = 0;
+this.freq = 200; // time in msec to update
+this.running = false;
+
+
 this.lastTime = 0;
 this.startTime = 0;
 this.timeForHuman = 0;
 
 this.start = () => {
-  that.startTime = new Date()/1;
-  that.intervalID = setInterval(that.redo,223);
+  that.time = 0;
+  that.lastTime = 0;
+  that.startTime = Date.now();
+  that.running = true;
+  that.redo();
 };
 
 this.pause = () => {
-  if(that.intervalID===0) return that.start();
-  that.stop();
-  that.intervalID=0;  
-  that.redo();  
-  this.lastTime += that.time;
+  if(that.running) {
+    that.running = false;
+    that.lastTime = that.time;
+    that.time = 0;
+  } else {
+    that.running = true;
+    that.startTime = Date.now();
+    that.time = 0;
+    that.redo();
+  }
+  
+  console.dir(that);
 };
 
 this.stop = () => {
-  clearInterval(that.intervalID);
+  if(!that.running) return;
+  that.pause();
+  console.log(`Stop ${that.opts.name} at ${that.timeForHuman}`);
 };
 
 this.redo = () => {
-  let timeNow = new Date()/1;
+  if(!that.running) return;
+  let timeNow = Date.now();
   that.time = (timeNow-that.startTime)+that.lastTime;
   that.formatTime();
+  setTimeout(that.redo, that.freq);
 };
 
 this.formatTime = () => {
