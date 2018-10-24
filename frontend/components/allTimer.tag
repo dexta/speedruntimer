@@ -1,6 +1,6 @@
 <alltimer>
 <span each={el,ind in listOfTimers}>
-  <timer name="{el.name}" namedid="{el.id}" besttime="el.best">
+  <timer name="{el.name}" namedid="{el.id}" besttime="{el.best}">
   <hr/>
 </span>
 <script>
