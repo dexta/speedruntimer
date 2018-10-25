@@ -16,8 +16,9 @@
   <hr>
   <timer name="Chapter 3 - Light World"></timer>
  -->
-  <alltimer>      </alltimer>
+  <alltimer></alltimer>
 </div>
+
 <!-- include extern librarys -->
 <script src="js/superagent.js"></script>
 <script src="js/riotux.js"></script>
@@ -36,9 +37,14 @@
   const defaultTimerList = {
     theme: "SuperMeatBoy",
     timerList: [
-      {id:'smbc1lw',name:'Chapter 1 - Light World',time:0,best:1337},
-      {id:'smbc2lw',name:'Chapterz 2 - Light World',time:0,best:4223},
-      {id:'smbc3lw',name:'Chapters 3 - Light World',time:0,best:644223},
+      {id:'smbc1lw',name:'Chapter 1 - Light World',time:0,best:24143423},
+      {id:'smbc1dw',name:'Chapter 1 - Dark World',time:0,best:24143423},
+      {id:'smbc2lw',name:'Chapter 2 - Light World',time:0,best:24143423},
+      {id:'smbc2dw',name:'Chapter 2 - Dark World',time:0,best:24143423},
+      {id:'smbc3lw',name:'Chapter 3 - Light World',time:0,best:24143423},
+      {id:'smbc3dw',name:'Chapter 3 - Dark World',time:0,best:24143423},
+      {id:'smbc4lw',name:'Chapter 4 - Light World',time:0,best:24143423},
+      {id:'smbc4dw',name:'Chapter 4 - Dark World',time:0,best:24143423},
     ]
   };
 
@@ -52,7 +58,7 @@
       loadTimerList: (state, themeName) => {
         let fromLocal = (themeName||false)? JSON.parse(localStorage.getItem(themeName)) : defaultTimerList;
         state.allTime = 0;
-        state.theme = themeName;
+        state.theme = fromLocal.theme;
         state.timerList = fromLocal.timerList;
       },
       saveTimerList: (state) => {
@@ -65,7 +71,7 @@
             for(let u in upObj) {
               state.timerList[s][u] = upObj[u];
             }
-          break;
+            break;
           }
         }
       },
@@ -83,8 +89,8 @@
     saveAll: (store) => {
       store.dispatch('saveTimerList');
     },
-    updateTimer: (store, updateObj) => {
-      store.dispatch('updateObj', updateObj);
+    updateTimer: (store, id, updateObj) => {
+      store.dispatch('updateById', id, updateObj);
     }
     // getList: ( store, state ) => {
     //   if(state===undefined) return;
@@ -104,7 +110,8 @@
     // }
   });
   // riotux.action('timerList', 'saveAll');
-  riotux.action('timerList', 'loadAll');
+  // riotux.action('timerList', 'updateTimer', 'smbc3lw', {best:64223});
+  riotux.action('timerList', 'loadAll', 'SuperMeatBoy');
 
 </script>
 </body>
