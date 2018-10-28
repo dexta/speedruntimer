@@ -21,6 +21,7 @@
 
 <!-- include extern librarys -->
 <script src="js/superagent.js"></script>
+<script src="js/localforage.min.js"></script>
 <script src="js/riotux.js"></script>
 <script src="js/riotrage.js"></script>
 
@@ -77,6 +78,32 @@
       },
       addAllTime: (state,timeToAdd) => {
         state.allTime+= timeToAdd;
+      },
+      moveUpInList: (state, id) => {
+        let index = state.timerList.map( e => { return e.id } ).indexOf(id);
+        if(index<=0) {
+          return (index===-1)? 'index not found' : 'index to low';
+        }
+        state.timerList.splice(index, 0, state.timerList.splice(index-1,1)[0]);
+      },
+      moveDownInList: (state, id) => {
+        let index = state.timerList.map( e => { return e.id } ).indexOf(id);
+        if(index===state.timerList.length-1) {
+          return 'index to high';
+        }
+        state.timerList.splice(index+1, 0, state.timerList.splice(index,1)[0]);        
+      },
+      moveInList: (state, id, dir) => {
+        let index = state.timerList.map( e => { return e.id } ).indexOf(id);
+        if(index===-1) {
+          return "index not found";
+        } else if(index===0&&dir==="UP") {
+          return "index to low";
+        } else if(index===state.timerList.length-1&&dir==="DOWN") {
+          return "index to high";
+        }
+        let to = (dir==="UP")? index-1 : index+1;
+        state.timerList.splice(to, 0, state.timerList.splice(index,1)[0]);
       }
     }
   });
@@ -91,6 +118,12 @@
     },
     updateTimer: (store, id, updateObj) => {
       store.dispatch('updateById', id, updateObj);
+    },
+    moveItemUp: (store, id) => {
+      return store.dispatch('moveInList', id, "UP");
+    },
+    moveItemDown: (store, id) => {
+      return store.dispatch('moveInList', id, "DOWN");
     }
     // getList: ( store, state ) => {
     //   if(state===undefined) return;

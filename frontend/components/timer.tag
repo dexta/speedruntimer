@@ -1,17 +1,27 @@
 <timer>
-<div class="row  {opts.bgc}">
-  <div class="col-3">
-    <span show={editMode}>
-      <i class="fa fa-arrow-up"></i>
-      <i class="fa fa-arrow-down"></i>
-    </span>
-    {opts.name}
+<div class="row">
+  <div class="col-3 {opts.bgc}">
+    <blockquote class="blockquote text-center">
+      {opts.name}
+    </blockquote>
   </div>
-  <div class={  'bg-danger':timeisred, 'bg-success':!timeisred, 'col-2':true }>
-    <span>{formatTime(time)}</span>
+  <div class={ 'bg-danger':timeisred, 'bg-success':!timeisred, 'col-2':true, 'bg-transparent':editMode}>
+    <blockquote hide={editMode} class="blockquote text-center">
+      {formatTime(time)}
+    </blockquote>
+    <blockquote show={editMode} class="blockquote text-center">
+    <!-- <span show={editMode}> -->
+      <button class="btn btn-primary" onclick={moveUp}>
+        <i class="fa fa-arrow-up"></i>
+      </button>
+      <button class="btn btn-primary" onclick={moveDown}>
+        <i class="fa fa-arrow-down"></i>
+      </button>
+    <!-- </span> -->
+    </blockquote>
   </div>
   <div class="col-2">
-    <span>{formatTime(bestTime)}</span>
+    <blockquote class="blockquote text-center">{formatTime(bestTime)}</blockquote>
   </div>
   <div class="col-5">
     <button onclick={start} class="btn btn-success">Start</button>
@@ -86,6 +96,16 @@ this.formatTime = (toHumanTime) => {
   let std = ("0"+Math.floor(tis/3600||0)).slice(-2);
 
   return `${std}:${min}:${sec}:${mil}`;
+};
+
+this.moveUp = () => {
+  let canI = riotux.action('timerList', 'moveItemUp', that.timerID);
+  console.log(`move up return ${canI}`);
+};
+
+this.moveDown = () => {
+  let canI = riotux.action('timerList', 'moveItemDown', that.timerID);
+  console.log(`move down return ${canI}`);
 };
 
 this.on("update", () => {
