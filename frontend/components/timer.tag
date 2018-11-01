@@ -11,10 +11,10 @@
     </blockquote>
     <blockquote show={editMode} class="blockquote text-center">
     <!-- <span show={editMode}> -->
-      <button class="btn btn-primary" onclick={moveUp}>
+      <button class="btn btn-sm btn-primary" onclick={moveUp}>
         <i class="fa fa-arrow-up"></i>
       </button>
-      <button class="btn btn-primary" onclick={moveDown}>
+      <button class="btn btn-sm btn-primary" onclick={moveDown}>
         <i class="fa fa-arrow-down"></i>
       </button>
     <!-- </span> -->
@@ -26,7 +26,8 @@
   <div class="col-5">
     <button onclick={start} class="btn btn-success">Start</button>
     <button onclick={pause} class="btn btn-info">Pause</button>
-    <button hide={beatthescore} onclick={stop} class="btn btn-danger">Stop</button>
+    <button hide={beatthescore||givemestats} onclick={stop} class="btn btn-danger">Stop</button>
+    <button show={givemestats} onclick={savestat} class="btn btn-info">SaveStat</button>
     <button show={beatthescore} onclick={save} class="btn btn-danger">Save</button>
   </div>
 </div>
@@ -42,6 +43,7 @@ this.freq = 50; // time in msec to update
 this.running = false;
 this.timeisred = false;
 this.beatthescore = false;
+this.givemestats = false;
 
 this.lastTime = 0;
 this.startTime = 0;
@@ -51,6 +53,8 @@ this.start = () => {
   that.lastTime = 0;
   that.startTime = Date.now();
   that.running = true;
+  that.beatthescore = false;
+  that.givemestats = false;
   that.redo();
 };
 
@@ -69,6 +73,9 @@ this.stop = () => {
   if(!that.running) return;
   that.pause();
   that.beatthescore = (that.time<that.bestTime||false);
+  if(!that.beatthescore) {
+    that.givemestats = true;
+  }
   console.log(`Stop ${that.opts.name} at ${that.formatTime(that.time)}`);
 };
 
@@ -76,7 +83,12 @@ this.save = () => {
   console.log("we do the save dance !");
   riotux.action('timerList', 'updateTimer', that.timerID, {best:that.time});
   riotux.action('timerList', 'saveAll');
-}
+};
+
+this.savestat = () => {
+  console.log("save the stat "+that.formatTime(that.time));
+  riotux.action('listOfTimes', 'updateTime', that.timerID, that.time);
+};
 
 this.redo = () => {
   if(!that.running) return;

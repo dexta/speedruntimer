@@ -53,7 +53,8 @@
     state: {
       theme: 'SuperMeatBoy',
       allTime: 0,
-      timerList: []
+      timerList: [],
+      listOfTimes: {}
     },
     mutations: {
       loadTimerList: (state, themeName) => {
@@ -104,6 +105,22 @@
         }
         let to = (dir==="UP")? index-1 : index+1;
         state.timerList.splice(to, 0, state.timerList.splice(index,1)[0]);
+      },
+      updateTimeOfItem: (state, id, time) => {
+        let rawLocal = localStorage.getItem(id)||'{}';
+        let fromLocal = (rawLocal||false)? JSON.parse(rawLocal) : {};
+        fromLocal[Date.now()] = time;
+        state.listOfTimes[id] = fromLocal;
+        let toLocal = JSON.stringify(fromLocal);
+        localStorage.setItem(id, toLocal);
+      },
+      loadTimeOfItem: (state,id) => {
+        if(!(state.listOfTimes[id]||false)) {
+          let rawLocal = localStorage.getItem(id)||'{}';
+          let fromLocal = (rawLocal||false)? JSON.parse(rawLocal) : {};
+          state.listOfTimes[id] = fromLocal;
+        }
+        return state.listOfTimes[id];
       }
     }
   });
@@ -124,6 +141,12 @@
     },
     moveItemDown: (store, id) => {
       return store.dispatch('moveInList', id, "DOWN");
+    },
+    updateTime: (store, id, time) => {
+      store.dispatch('updateTimeOfItem', id, time);
+    },
+    loadTime: (store, id) => {
+      return store.dispatch('loadTimeOfItem', id);
     }
     // getList: ( store, state ) => {
     //   if(state===undefined) return;
@@ -144,6 +167,7 @@
   });
   // riotux.action('timerList', 'saveAll');
   // riotux.action('timerList', 'updateTimer', 'smbc3lw', {best:64223});
+  // riotux.action('listOfTimes', 'updateTime', id, time);
   riotux.action('timerList', 'loadAll', 'SuperMeatBoy');
 
 </script>
