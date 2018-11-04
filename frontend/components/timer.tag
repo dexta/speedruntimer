@@ -83,6 +83,7 @@ this.save = () => {
   console.log("we do the save dance !");
   riotux.action('timerList', 'updateTimer', that.timerID, {best:that.time});
   riotux.action('timerList', 'saveAll');
+  that.savestat();
 };
 
 this.savestat = () => {
