@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/dexta/speedruntimer#readme",
   "dependencies": {
-    "express": "^4.16.4",
-    "localforage": "^1.7.3"
+    "chart.js": "^2.7.3",
+    "express": "^4.16.4"
   }
 }
