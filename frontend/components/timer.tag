@@ -29,8 +29,13 @@
     <button hide={beatthescore||givemestats} onclick={stop} class="btn btn-danger">Stop</button>
     <button show={givemestats} onclick={savestat} class="btn btn-info">SaveStat</button>
     <button show={beatthescore} onclick={save} class="btn btn-danger">Save</button>
+
+    <button onclick={toggleStats} class="pull-right btn btn-primary">
+      <i class="fa fa-line-chart"></i>
+    </button>
   </div>
 </div>
+<chartjs if={showChart} cIndex="{timerID}" cTitle="{opts.name}"></chartjs>
 <hr>
 <script>
 let that = this;
@@ -44,6 +49,7 @@ this.running = false;
 this.timeisred = false;
 this.beatthescore = false;
 this.givemestats = false;
+this.showChart = false;
 
 this.lastTime = 0;
 this.startTime = 0;
@@ -119,6 +125,10 @@ this.moveUp = () => {
 this.moveDown = () => {
   let canI = riotux.action('timerList', 'moveItemDown', that.timerID);
   console.log(`move down return ${canI}`);
+};
+
+this.toggleStats = () => {
+  that.showChart = (that.showChart||that.showChart==='true'||false)? false : true;
 };
 
 this.on("update", () => {

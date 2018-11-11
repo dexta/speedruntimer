@@ -26,7 +26,7 @@
 let that = this;
 this.listOfTimers = [];
 this.themeName = "";
-this.editActive = true;
+this.editActive = false;
 
 
 this.getListOfTimers = () => {

@@ -10,17 +10,15 @@
 </head>
 <body>
 <div class="container">
-<!--   <timer name="Chapter 1 - Light World"></timer>
-  <hr>
-  <timer name="Chapter 2 - Light World"></timer>
-  <hr>
-  <timer name="Chapter 3 - Light World"></timer>
- -->
+  <!-- <chartjs cIndex="smbc2lw" cTitle="Chapter 2 - Light World"></chartjs> -->
+  <statTimeEdit></statTimeEdit>
   <alltimer></alltimer>
 </div>
 
+
 <!-- include extern librarys -->
 <script src="js/superagent.js"></script>
+<script src="js/moment.min.js"></script>
 <script src="js/Chart.min.js"></script>
 <script src="js/riotux.js"></script>
 <script src="js/riotrage.js"></script>
@@ -28,6 +26,8 @@
 <!-- include components -->
 <script src="components/timer.tag" type="riot/tag"></script>
 <script src="components/allTimer.tag" type="riot/tag"></script>
+<script src="components/chartjs.tag" type="riot/tag"></script>
+<script src="components/statTimeEdit.tag" type="riot/tag"></script>
 
 <!-- include riot.js and the compiler -->
 <script src="js/riot+compiler.js"></script>
