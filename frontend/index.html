@@ -197,9 +197,20 @@ const genSomeTimes = () => {
     let toLocal = JSON.stringify(toSave);
     localStorage.setItem(e.id, toLocal);
   });
+}
 
-  
-
+const saveDataVersionOne = (themeName) => {
+  if(!themeName||false) return;
+  let dataMainTree = JSON.parse(localStorage.getItem(themeName));
+  let timeingList = {};
+  for(let t in dataMainTree.timerList) {
+    let item = dataMainTree.timerList[t];
+    let tmpRaw = JSON.parse(localStorage.getItem(item.id));
+    timeingList[item.id] = tmpRaw;
+  }
+  let out = {main: dataMainTree, list: timeingList};
+  console.dir(out);
+  console.log(JSON.stringify(out));
 }
 </script>
 
