@@ -10,14 +10,12 @@
       {formatTime(time)}
     </blockquote>
     <blockquote show={editMode} class="blockquote text-center">
-    <!-- <span show={editMode}> -->
       <button class="btn btn-sm btn-primary" onclick={moveUp}>
         <i class="fa fa-arrow-up"></i>
       </button>
       <button class="btn btn-sm btn-primary" onclick={moveDown}>
         <i class="fa fa-arrow-down"></i>
       </button>
-    <!-- </span> -->
     </blockquote>
   </div>
   <div class="col-2">
@@ -101,7 +99,6 @@ this.redo = () => {
   if(!that.running) return;
   let timeNow = Date.now();
   that.time = (timeNow-that.startTime)+that.lastTime;
-  // that.formatTime();
   that.update();
   setTimeout(that.redo, that.freq);
 };

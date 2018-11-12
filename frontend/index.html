@@ -10,11 +10,9 @@
 </head>
 <body>
 <div class="container">
-  <!-- <chartjs cIndex="smbc2lw" cTitle="Chapter 2 - Light World"></chartjs> -->
   <statTimeEdit></statTimeEdit>
   <alltimer></alltimer>
 </div>
-
 
 <!-- include extern librarys -->
 <script src="js/superagent.js"></script>
@@ -130,7 +128,6 @@
     }
   });
 
-
   let action = riotux.Actions({
     loadAll: (store, name) => {
       store.dispatch('loadTimerList', name);
@@ -156,31 +153,12 @@
     saveTimeBlob: (store, id, timesObj) => {
       return store.dispatch('saveTimeOfItemBlob', id, timesObj);
     }
-    // getList: ( store, state ) => {
-    //   if(state===undefined) return;
-    //   let baseString = (state.search.base||false)? state.search.base : '';
-    //   let searchText = encodeURIComponent(baseString + state.search.text);
-    //   let urlString = '/search/key/'+state.search.limit+'/'+searchText;
-    //   superagent('get',urlString).then( (res) => {
-    //     store.dispatch('setKVlist', res.body);
-    //     console.log("read kvlist done !!!");
-    //   });
-    // },
-    // getBaseList: (store, state, searchString) => {
-    //   let urlString = '/search/key/'+state.search.limit+'/'+encodeURIComponent(searchString);
-    //   superagent('get',urlString).then( (res) => {
-    //     store.dispatch('setBaseListMatrix', res.body);
-    //   });
-    // }
   });
   // riotux.action('timerList', 'saveAll');
   // riotux.action('timerList', 'updateTimer', 'smbc3lw', {best:64223});
   // riotux.action('listOfTimes', 'updateTime', id, time);
   riotux.action('timerList', 'loadAll', 'SuperMeatBoy');
-
 </script>
-
-
 <!-- tmp scripts remove after useing -->
 <script>
 const genSomeTimes = () => {
@@ -190,10 +168,8 @@ const genSomeTimes = () => {
     for(let rd=1;rd<=10;rd++) {
       start += parseInt(Math.random()*(10000000*rd));
       timeSpend = parseInt(Math.random()*1000000)+(50044*(i*i+1));
-      // console.log(e.id,new Date(start),timeSpend);
       toSave[start] = timeSpend;
     }
-    // console.dir(toSave);
     let toLocal = JSON.stringify(toSave);
     localStorage.setItem(e.id, toLocal);
   });

@@ -45,7 +45,6 @@ this.chartOptions = {
 
 this.getData = (localName) => {
   let rawLocal = JSON.parse( localStorage.getItem(localName) );
-  // console.dir(rawLocal);
   that.chartData.labels = [];
   that.chartData.datasets[0].data = [];
   for(let c in rawLocal) {
@@ -58,28 +57,21 @@ this.getData = (localName) => {
 
 this.on('mount', () => {
   that.getData(that.chartIndex);
-  // that.chartData.labels = that.chartData.labels.map( e => {return that.formatDate(e)});
-  // that.chartData.datasets[0].data = that.chartData.datasets[0].data.map( e=>{ return that.formateTime(e); });
   that.drawChart();
-// setTimeout(that.drawChart, 500);
 });
 
 this.drawChart = () => {
   let ctx = that.root.querySelector('canvas').getContext("2d");
   ctx.height = 200;
-  // console.dir(ctx);
   let chart = new Chart(ctx,{
     type: 'line',
     data: that.chartData,
     options: that.chartOptions
-});
-  console.log("drawChart");
-  // chart.Line(that.chartData, that.chartOptions);
+  });
 };
 
 this.formatDate = (timeinsec) => {
   return moment(parseInt(timeinsec)).format("YYYY:MM:DD HH:mm:ss");
-
 };
 
 this.formatTime = (toHumanTime) => {
@@ -94,12 +86,10 @@ this.formatTime = (toHumanTime) => {
 };
 
 </script>
-
 <style scoped>
     :scope {
       display: inline-block;
       width: 100%;
     }
 </style>
-
 </chartjs>

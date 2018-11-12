@@ -28,7 +28,6 @@ this.listOfTimers = [];
 this.themeName = "";
 this.editActive = false;
 
-
 this.getListOfTimers = () => {
   that.listOfTimers = riotux.getter('timerList');
   that.themeName = riotux.getter('theme');
@@ -50,13 +49,9 @@ riotux.subscribe(that, 'timerList', ( state, state_value ) => {
   that.getListOfTimers();
 });
 
-
 this.on('mount', () => {
   that.getListOfTimers();
 });
 
-
-
 </script>
-
 </alltimer>
