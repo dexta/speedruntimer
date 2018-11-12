@@ -8,15 +8,24 @@
   </tr>
   <tr each={ val,inx in timeToEdit }>
     <td>
-      <button class="btn btn-danger">
+      <button class="btn btn-danger" onclick={removeTime(inx)}>
         <i class="fa fa-remove"></i>
       </button>
-      <button class="btn btn-info">
+      <button  hide={doEditLine[inx]} class="btn btn-info" onclick={editTime(inx)}>
         <i class="fa fa-edit"></i>
       </button>
+      <button show={doEditLine[inx]} class="btn btn-danger" onclick={saveTime(inx)}>
+        <i class="fa fa-save"></i>
+      </button>
     </td>
-    <td>{formatDate(inx)}</td>
-    <td>{formatTime(val)}</td>
+    <td hide={doEditLine[inx]}>{formatDate(inx)}</td>
+    <td show={doEditLine[inx]}>
+      <input type="text" class="form-control" ref="timestamp_{inx}" value={inx}>
+    </td>
+    <td hide={doEditLine[inx]}>{formatTime(val)}</td>
+    <td show={doEditLine[inx]}>
+      <input type="text" class="form-control" ref="timespend_{inx}" value={val}>
+    </td>
   </tr>
 </table>
 
@@ -27,6 +36,7 @@ this.chartIndex = this.opts.cindex;
 this.chartTitle = this.opts.ctitle;
 
 this.listOfTimes = {};
+this.doEditLine = {};
 
 this.getListOfTimers = () => {
   that.listOfTimes = riotux.getter('listOfTimes');
@@ -37,9 +47,7 @@ this.getListOfTimers = () => {
 }
 
 this.formatDate = (milsec) => {
-  // return () => {
     return moment(parseInt(milsec)).format("YYYY:MM:DD HH:mm:ss");
-  // };
 };
 
 this.formatTime = (toHumanTime) => {
@@ -53,6 +61,32 @@ this.formatTime = (toHumanTime) => {
   return `${std}:${min}:${sec}:${mil}`;
 };
 
+this.removeTime = (indexNo) => {
+  return () => {
+    if(that.timeToEdit[indexNo]||false) {
+      delete that.timeToEdit[indexNo];
+      riotux.action('listOfTimes','saveTimeBlob','smbc1lw',that.timeToEdit);
+    }
+    console.log("click remove time from index "+indexNo);
+    }
+}
+
+this.editTime = (indexNo) => {
+  return () => {
+    console.log("click edit time from index "+indexNo);
+    that.doEditLine[indexNo] = true;
+    // that.update();
+    }
+}
+
+this.saveTime = (indexNo) => {
+  return () => {
+    // riotux.action('listOfTimes','saveTimeBlob','smbc1lw',that.timeToEdit);
+    let newTimestamp = that.refs["timestamp_"+indexNo].value;
+    let newTimespend = that.refs["timespend_"+indexNo].value;
+    console.log(newTimestamp,newTimespend);
+  }
+}
 
 this.on("mount",()=>{
   that.listOfTimes = riotux.action('listOfTimes','loadTime','smbc1lw');

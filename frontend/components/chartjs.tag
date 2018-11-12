@@ -36,7 +36,6 @@ this.chartOptions = {
     xAxes: [{
       ticks: {
         callback: (label, index, labels) => {
-          console.log(label);
           return that.formatDate(label);
         }
       }
@@ -46,7 +45,7 @@ this.chartOptions = {
 
 this.getData = (localName) => {
   let rawLocal = JSON.parse( localStorage.getItem(localName) );
-  console.dir(rawLocal);
+  // console.dir(rawLocal);
   that.chartData.labels = [];
   that.chartData.datasets[0].data = [];
   for(let c in rawLocal) {

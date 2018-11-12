@@ -58,7 +58,7 @@
     },
     mutations: {
       loadTimerList: (state, themeName) => {
-        let fromLocal = (themeName||false)? JSON.parse(localStorage.getItem(themeName)) : defaultTimerList;
+        let fromLocal = (themeName&&localStorage.getItem(themeName)||false)? JSON.parse(localStorage.getItem(themeName)) : defaultTimerList;
         state.allTime = 0;
         state.theme = fromLocal.theme;
         state.timerList = fromLocal.timerList;
@@ -121,7 +121,12 @@
           state.listOfTimes[id] = fromLocal;
         }
         return state.listOfTimes[id];
-      }
+      },
+      saveTimeOfItemBlob: (state, id, toSaveObj) => {
+        if(!(toSaveObj||false)) return;
+        state.listOfTimes[id] = toSaveObj;
+        localStorage.setItem(id, JSON.stringify(toSaveObj));
+      },
     }
   });
 
@@ -147,6 +152,9 @@
     },
     loadTime: (store, id) => {
       return store.dispatch('loadTimeOfItem', id);
+    },
+    saveTimeBlob: (store, id, timesObj) => {
+      return store.dispatch('saveTimeOfItemBlob', id, timesObj);
     }
     // getList: ( store, state ) => {
     //   if(state===undefined) return;
@@ -171,5 +179,29 @@
   riotux.action('timerList', 'loadAll', 'SuperMeatBoy');
 
 </script>
+
+
+<!-- tmp scripts remove after useing -->
+<script>
+const genSomeTimes = () => {
+  store.state.timerList.forEach( (e,i) => { 
+    let toSave = {};
+    start = 1530008489878+parseInt(Math.random()*(100000*(i+1)));
+    for(let rd=1;rd<=10;rd++) {
+      start += parseInt(Math.random()*(10000000*rd));
+      timeSpend = parseInt(Math.random()*1000000)+(50044*(i*i+1));
+      // console.log(e.id,new Date(start),timeSpend);
+      toSave[start] = timeSpend;
+    }
+    // console.dir(toSave);
+    let toLocal = JSON.stringify(toSave);
+    localStorage.setItem(e.id, toLocal);
+  });
+
+  
+
+}
+</script>
+
 </body>
 </html>
