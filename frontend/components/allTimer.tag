@@ -1,7 +1,7 @@
 <alltimer>
 <div class="row">
   <div class="col-3">
-    <b class="h5">{themeName}</b>
+    <b class="h5">{main.activeTheme}</b>
   </div>
   <div class="col-5">
     <button class="btn btn-dark" onclick={ toggleEdit }>
@@ -24,11 +24,15 @@
 
 <script>
 let that = this;
+this.main = {};
+this.loaded = {};
 this.listOfTimers = [];
 this.themeName = "";
 this.editActive = false;
 
 this.getListOfTimers = () => {
+  that.main = riotux.getter('main');
+  that.loaded = riotux.getter('loadedLevel');
   that.listOfTimers = riotux.getter('timerList');
   that.themeName = riotux.getter('theme');
   that.update();
@@ -45,11 +49,12 @@ this.saveAll = () => {
   console.log(`Save ${that.themeName} count: ${that.listOfTimers.length}`);
 };
 
-riotux.subscribe(that, 'timerList', ( state, state_value ) => {
+riotux.subscribe(that, 'main', ( state, state_value ) => {
   that.getListOfTimers();
 });
 
 this.on('mount', () => {
+  riotux.action('main','initLoad');
   that.getListOfTimers();
 });
 
