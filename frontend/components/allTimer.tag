@@ -17,8 +17,8 @@
   </div>
 </div>
 <hr>
-<span each={el,ind in listOfTimers}>
-  <timer name="{el.name}" namedid="{el.id}" besttime="{el.best}" bgc="{el.bgcolor}" editmode="{editActive}">
+<span each={el,ind in loaded.level}>
+  <timer namedid="{el.id}" bgc="{el.bgcolor}" editmode="{editActive}">
   <hr/>
 </span>
 
@@ -32,6 +32,7 @@ this.editActive = false;
 
 this.getListOfTimers = () => {
   that.main = riotux.getter('main');
+  riotux.action("loadedLevel","loadLevel",that.main.activeTheme);
   that.loaded = riotux.getter('loadedLevel');
   that.listOfTimers = riotux.getter('timerList');
   that.themeName = riotux.getter('theme');

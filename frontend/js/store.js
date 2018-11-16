@@ -142,7 +142,7 @@ const defaultTimerList = {
         if(!state.main.themeList||false) return "no main stat loaded";
         for(let t in state.main.themeList) {
           if(state.main.themeList[t].name===themeName) {
-            state.main.loadedLevel = state.main.themeList[t];
+            state.loadedLevel = state.main.themeList[t];
             break;
           }
         }
@@ -192,10 +192,15 @@ const defaultTimerList = {
     // 
     initLoad: (store) => {
       store.dispatch('loadMainTree');
-      store.dispatch('loadThemeList',store.state.main.activeTheme);
     },
     saveMainAll: (store) => {
       store.dispatch('saveMainTree');
+    },
+    loadLevel: (store, levelName) => {
+      store.dispatch('loadThemeList',levelName);
+    },
+    loadLevelDetails: (store, levelID) => {
+      store.dispatch('loadLevelTime', levelID);
     },
     allToJson: (store) => {
       return store.dispatch('exportAll');

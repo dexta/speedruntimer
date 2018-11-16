@@ -39,7 +39,7 @@
 let that = this;
 
 this.timerID = this.opts.namedid;
-this.bestTime = this.opts.besttime;
+// this.bestTime = this.opts.besttime;
 this.editMode = (this.opts.editmode||this.opts.editmode==="true"||false);
 this.time = 0;
 this.freq = 50; // time in msec to update
@@ -135,6 +135,14 @@ this.on("update", () => {
     that.timeisred = false;
   }
   that.editMode = (that.opts.editmode||that.opts.editmode==="true"||false);
+});
+
+this.on("mount", () => {
+  riotux.action('timeslist','loadLevelDetails', that.timerID);
+});
+
+riotux.subscribe(that, 'timeslist', ( state, state_value ) => {
+  console.dir(state_value);
 });
 
 </script>
