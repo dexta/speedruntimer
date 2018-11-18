@@ -101,7 +101,7 @@ this.saveTime = (indexNo) => {
   return () => {
     // riotux.action('listOfTimes','saveTimeBlob','smbc1lw',that.timeToEdit);
     let newTimestamp = that.refs["timestamp_"+indexNo].value;
-    let newTimespend = ;
+    let newTimespend = 0;
     if(indexNo===-42) {
       if(that.chartTitle===newTimestamp) return;
       that.listOfTimes.name = newTimestamp;
