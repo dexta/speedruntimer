@@ -44,12 +44,13 @@ this.chartOptions = {
 };
 
 this.getData = (localName) => {
-  let rawLocal = JSON.parse( localStorage.getItem(localName) );
+  let rawLocal = loadLevel(localName);
+  console.log('chart get data');
   that.chartData.labels = [];
   that.chartData.datasets[0].data = [];
-  for(let c in rawLocal) {
+  for(let c in rawLocal.timeline) {
     that.chartData.labels.push(c);
-    that.chartData.datasets[0].data.push(rawLocal[c]);
+    that.chartData.datasets[0].data.push(rawLocal.timeline[c]);
   }
   that.chartData.datasets[0].label = that.opts.ctitle;
 };

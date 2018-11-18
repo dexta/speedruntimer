@@ -1,6 +1,19 @@
 <statTimeEdit>
-<h1>{chartTitle}</h1>
 <table class="table table-striped">
+  <tr>
+    <th scope="col">
+      <button hide={doEditLine[-42]} class="btn btn-dark pull-left" onclick={editTime(-42)}>
+        <i class="fa fa-edit"></i>
+      </button>
+      <button show={doEditLine[-42]} class="btn btn-danger" onclick={saveTime(-42)}>
+        <i class="fa fa-save"></i>
+      </button>
+    </th>
+    <th colspan="2">
+      <h1 hide={doEditLine[-42]}>{chartTitle}</h1>
+      <input show={doEditLine[-42]} type="text" class="form-control" ref="timespend_-42" value={chartTitle}>
+    </th>
+  </tr>
   <tr>
     <th scope="col">Action</th>
     <th scope="col">Time of stop</th>
@@ -33,21 +46,24 @@
 let that = this;
 
 this.chartIndex = this.opts.cindex;
-this.chartTitle = this.opts.ctitle;
+this.chartTitle = this.opts.ctitle||"default Title";
+
+this.timeToEdit = {};
 
 this.listOfTimes = {};
 this.doEditLine = {};
 
-this.getListOfTimers = () => {
-  that.listOfTimes = riotux.getter('listOfTimes');
-  if(that.listOfTimes['smbc1lw']||false) {
-    that.timeToEdit = that.listOfTimes['smbc1lw'];
-    that.update();
-  }
-}
+this.getTimeData = () => {
+  that.listOfTimes = loadLevel(that.chartIndex);
+  that.timeToEdit = that.listOfTimes.timeline;
+  that.chartTitle = that.listOfTimes.name;
+  that.doEditLine = {};  
+  // console.dir(that.timeToEdit);
+  that.update();
+};
 
 this.formatDate = (milsec) => {
-    return moment(parseInt(milsec)).format("YYYY:MM:DD HH:mm:ss");
+  return moment(parseInt(milsec)).format("YYYY:MM:DD HH:mm:ss");
 };
 
 this.formatTime = (toHumanTime) => {
@@ -65,7 +81,9 @@ this.removeTime = (indexNo) => {
   return () => {
     if(that.timeToEdit[indexNo]||false) {
       delete that.timeToEdit[indexNo];
-      riotux.action('listOfTimes','saveTimeBlob','smbc1lw',that.timeToEdit);
+      // riotux.action('listOfTimes','saveTimeBlob','smbc1lw',that.timeToEdit);
+      that.listOfTimes.timeline = that.timeToEdit;
+      saveLevel(that.chartIndex, that.listOfTimes);
     }
     console.log("click remove time from index "+indexNo);
     }
@@ -83,21 +101,26 @@ this.saveTime = (indexNo) => {
   return () => {
     // riotux.action('listOfTimes','saveTimeBlob','smbc1lw',that.timeToEdit);
     let newTimestamp = that.refs["timestamp_"+indexNo].value;
-    let newTimespend = that.refs["timespend_"+indexNo].value;
+    let newTimespend = ;
+    if(indexNo===-42) {
+      if(that.chartTitle===newTimestamp) return;
+      that.listOfTimes.name = newTimestamp;
+      saveLevel(that.chartIndex, that.listOfTimes);
+      return;
+    } else {
+      newTimespend = that.refs["timespend_"+indexNo].value;
+      that.listOfTimes.timeline = that.timeToEdit;
+      saveLevel(that.chartIndex, that.listOfTimes);
+      return;
+    }
+    
     console.log(newTimestamp,newTimespend);
   }
 }
 
 this.on("mount",()=>{
-  that.listOfTimes = riotux.action('listOfTimes','loadTime','smbc1lw');
-  // that.getListOfTimers();
+  that.getTimeData();
 });
-
-riotux.subscribe(that, 'listOfTimes', ( state, state_value ) => {
-  console.dir(state_value);
-  that.getListOfTimers();
-});
-
 </script>
 
 </statTimeEdit>

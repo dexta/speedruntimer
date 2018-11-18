@@ -1,8 +1,8 @@
 <timer>
 <div class="row">
-  <div class="col-3 {opts.bgc}">
+  <div class="col-3 {timerOBJ.bgcolor}">
     <blockquote class="blockquote text-center">
-      {opts.name}
+      {timerOBJ.name}
     </blockquote>
   </div>
   <div class={ 'bg-danger':timeisred, 'bg-success':!timeisred, 'col-2':true, 'bg-transparent':editMode}>
@@ -19,7 +19,7 @@
     </blockquote>
   </div>
   <div class="col-2">
-    <blockquote class="blockquote text-center">{formatTime(bestTime)}</blockquote>
+    <blockquote class="blockquote text-center">{formatTime(timerOBJ.best)}</blockquote>
   </div>
   <div class="col-5">
     <button onclick={start} class="btn btn-success">Start</button>
@@ -33,13 +33,14 @@
     </button>
   </div>
 </div>
-<chartjs if={showChart} cIndex="{timerID}" cTitle="{opts.name}"></chartjs>
+<chartjs if={showChart} cIndex="{timerID}" cTitle="{name}"></chartjs>
 <hr>
 <script>
 let that = this;
 
 this.timerID = this.opts.namedid;
-// this.bestTime = this.opts.besttime;
+this.timerOBJ = {};
+
 this.editMode = (this.opts.editmode||this.opts.editmode==="true"||false);
 this.time = 0;
 this.freq = 50; // time in msec to update
@@ -76,7 +77,7 @@ this.pause = () => {
 this.stop = () => {
   if(!that.running) return;
   that.pause();
-  that.beatthescore = (that.time<that.bestTime||false);
+  that.beatthescore = (that.time<that.timerOBJ.best||false);
   if(!that.beatthescore) {
     that.givemestats = true;
   }
@@ -84,15 +85,19 @@ this.stop = () => {
 };
 
 this.save = () => {
-  console.log("we do the save dance !");
-  riotux.action('timerList', 'updateTimer', that.timerID, {best:that.time});
-  riotux.action('timerList', 'saveAll');
-  that.savestat();
+  // console.log("we do the save dance !");
+  // riotux.action('timerList', 'updateTimer', that.timerID, {best:that.time});
+  // riotux.action('timerList', 'saveAll');
+  // that.savestat();
+
 };
 
 this.savestat = () => {
-  console.log("save the stat "+that.formatTime(that.time));
-  riotux.action('listOfTimes', 'updateTime', that.timerID, that.time);
+  // console.log("save the stat "+that.formatTime(that.time));
+  // riotux.action('listOfTimes', 'updateTime', that.timerID, that.time);
+  let nowD = Date.now()/1;
+  that.timerOBJ.timeline[nowD] = that.time;
+  saveLevel(that.timerID, that.timerOBJ);
 };
 
 this.redo = () => {
@@ -138,11 +143,7 @@ this.on("update", () => {
 });
 
 this.on("mount", () => {
-  riotux.action('timeslist','loadLevelDetails', that.timerID);
-});
-
-riotux.subscribe(that, 'timeslist', ( state, state_value ) => {
-  console.dir(state_value);
+  that.timerOBJ = loadLevel(that.timerID);
 });
 
 </script>
