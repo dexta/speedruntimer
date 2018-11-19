@@ -11,7 +11,7 @@
     </th>
     <th colspan="2">
       <h1 hide={doEditLine[-42]}>{chartTitle}</h1>
-      <input show={doEditLine[-42]} type="text" class="form-control" ref="timespend_-42" value={chartTitle}>
+      <input show={doEditLine[-42]} type="text" class="form-control" ref="timestamp_-42" value={chartTitle}>
     </th>
   </tr>
   <tr>
@@ -102,6 +102,7 @@ this.saveTime = (indexNo) => {
     // riotux.action('listOfTimes','saveTimeBlob','smbc1lw',that.timeToEdit);
     let newTimestamp = that.refs["timestamp_"+indexNo].value;
     let newTimespend = 0;
+    that.doEditLine[indexNo] = false;
     if(indexNo===-42) {
       if(that.chartTitle===newTimestamp) return;
       that.listOfTimes.name = newTimestamp;

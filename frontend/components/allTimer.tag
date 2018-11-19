@@ -47,8 +47,12 @@ this.toggleEdit = () => {
 
 this.saveAll = () => {
   riotux.action('timerList', 'saveAll');
-  console.log(`Save ${that.themeName} count: ${that.listOfTimers.length}`);
+  console.log(`Save ${that.main.activeTheme} count: ${that.loaded.length}`);
 };
+
+riotux.subscribe(that, 'loadedLevel', ( state, state_value ) => {
+  that.getListOfTimers();
+});
 
 riotux.subscribe(that, 'main', ( state, state_value ) => {
   that.getListOfTimers();

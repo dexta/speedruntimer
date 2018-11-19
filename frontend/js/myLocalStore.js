@@ -10,7 +10,7 @@ const loadLevel = (levelID) => {
 };
 
 const saveLevel = (levelID,levelData) => {
-  levelData[id] = levelID;
+  levelData.id = levelID;
   levelData.best = (levelData.best||false)? parseInt(levelData.best) : 24143423;
   for(let ts in levelData.timeline) {
     if(levelData.best>levelData.timeline[ts]) {

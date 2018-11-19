@@ -15,7 +15,7 @@ const newMutation = {
               state.loadedLevel = state.main.themeList[tl].level;
               for(let le in state.main.themeList[tl].level) {
                 let tmraw = JSON.parse(localStorage.getItem(state.main.themeList[tl].level[le]));
-                if(tmraw.name||false) {
+                if(tmraw&&tmraw.name||false) {
                   state.timeslist[state.main.themeList[tl].level[le]] = tmraw;
                 }
               }
@@ -69,16 +69,18 @@ const newMutation = {
         state.timeslist[levelID].timeline[newTime.date] = newTime.time;
       },
       moveLevelInList: (state, id, dir) => {
-        let index = state.loadedLevel[state.main.activeTheme].map( e => { return e.id } ).indexOf(id);
+        let theme = state.main.themeList.map( e => { return e.name } ).indexOf(state.main.activeTheme);
+        let index = state.main.themeList[theme].level.indexOf(id);
         if(index===-1) {
           return "index not found";
         } else if(index===0&&dir==="UP") {
           return "index to low";
-        } else if(index===state.loadedLevel.length-1&&dir==="DOWN") {
+        } else if(index===state.main.themeList[theme].level.length-1&&dir==="DOWN") {
           return "index to high";
         }
         let to = (dir==="UP")? index-1 : index+1;
-        state.loadedLevel.splice(to, 0, state.loadedLevel.splice(index,1)[0]);
+        state.main.themeList[theme].level.splice(to, 0, state.main.themeList[theme].level.splice(index,1)[0]);
+        state.loadedLevel = state.main.themeList[theme].level;
       },
       // 
       // end of new mutation here

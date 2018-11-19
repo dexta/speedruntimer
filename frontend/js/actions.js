@@ -20,10 +20,16 @@ let action = riotux.Actions({
     allFromJson: (store, jsonObj) => {
       return store.dispatch('importAll', jsonObj);
     },
-    addTime: (store, levelID, newTime) => {
-      store.dispatch('addLevelTime', levelID, newTime);
-      store.dispatch('saveLevelTime', levelID, store.state.loadedLevel[levelID]);
+    moveItemUp: (store, id) => {
+      return store.dispatch('moveLevelInList', id, "UP");
     },
+    moveItemDown: (store, id) => {
+      return store.dispatch('moveLevelInList', id, "DOWN");
+    },
+    // addTime: (store, levelID, newTime) => {
+    //   store.dispatch('addLevelTime', levelID, newTime);
+    //   store.dispatch('saveLevelTime', levelID, store.state.loadedLevel[levelID]);
+    // },
     // 
     // end new actions here
     // 
@@ -35,12 +41,6 @@ let action = riotux.Actions({
     },
     updateTimer: (store, id, updateObj) => {
       store.dispatch('updateById', id, updateObj);
-    },
-    moveItemUp: (store, id) => {
-      return store.dispatch('moveInList', id, "UP");
-    },
-    moveItemDown: (store, id) => {
-      return store.dispatch('moveInList', id, "DOWN");
     },
     updateTime: (store, id, time) => {
       store.dispatch('updateTimeOfItem', id, time);

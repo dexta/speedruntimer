@@ -120,12 +120,12 @@ this.formatTime = (toHumanTime) => {
 };
 
 this.moveUp = () => {
-  let canI = riotux.action('timerList', 'moveItemUp', that.timerID);
+  let canI = riotux.action('loadedLevel', 'moveItemUp', that.timerID);
   console.log(`move up return ${canI}`);
 };
 
 this.moveDown = () => {
-  let canI = riotux.action('timerList', 'moveItemDown', that.timerID);
+  let canI = riotux.action('loadedLevel', 'moveItemDown', that.timerID);
   console.log(`move down return ${canI}`);
 };
 

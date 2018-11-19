@@ -1,4 +1,4 @@
-{"main": {
+const testDataVersion2 = {"main": {
     "themeList": [
       {"name":"Super Meat Boy","level":["smbc1lw","smbc1dw","smbc2lw","smbc2dw","smbc3lw","smbc3dw","smbc4lw","smbc4dw","smbc5lw","smbc5dw"]},
       {"name":"Great Giana Sisters","level":["ggslevel01","ggslevel02","ggslevel03","ggslevel04","ggslevel05","ggslevel06","ggslevel07"]}
