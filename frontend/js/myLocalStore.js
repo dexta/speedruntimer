@@ -20,3 +20,23 @@ const saveLevel = (levelID,levelData) => {
   let tstr = JSON.stringify(levelData);
   return localStorage.setItem(levelID, tstr);
 };
+
+const saveMain = () => {
+  let main = riotux.getter('main');
+  localStorage.setItem("speedrunners", JSON.stringify(main));
+};
+
+const formatTimeSpend = (toHumanTime) => {
+  let tis = Math.floor(toHumanTime/1000);
+  let mil = toHumanTime%tis||0;
+
+  let sec = ("0"+Math.floor(tis%3600%60||0)).slice(-2);
+  let min = ("0"+Math.floor(tis%3600/60||0)).slice(-2);
+  let std = ("0"+Math.floor(tis/3600||0)).slice(-2);
+
+  return `${std}:${min}:${sec}:${mil}`;
+};
+
+const formatDate = (timeinsec) => {
+  return moment(parseInt(timeinsec)).format("YYYY:MM:DD HH:mm:ss");
+};

@@ -35,7 +35,7 @@
     <td show={doEditLine[inx]}>
       <input type="text" class="form-control" ref="timestamp_{inx}" value={inx}>
     </td>
-    <td hide={doEditLine[inx]}>{formatTime(val)}</td>
+    <td hide={doEditLine[inx]}>{formatTimeSpend(val)}</td>
     <td show={doEditLine[inx]}>
       <input type="text" class="form-control" ref="timespend_{inx}" value={val}>
     </td>
@@ -47,6 +47,9 @@ let that = this;
 
 this.chartIndex = this.opts.cindex;
 this.chartTitle = this.opts.ctitle||"default Title";
+
+this.formatTimeSpend = formatTimeSpend;
+this.formatDate = formatDate;
 
 this.timeToEdit = {};
 
@@ -60,21 +63,6 @@ this.getTimeData = () => {
   that.doEditLine = {};  
   // console.dir(that.timeToEdit);
   that.update();
-};
-
-this.formatDate = (milsec) => {
-  return moment(parseInt(milsec)).format("YYYY:MM:DD HH:mm:ss");
-};
-
-this.formatTime = (toHumanTime) => {
-  let tis = Math.floor(toHumanTime/1000);
-  let mil = toHumanTime%tis||0;
-
-  let sec = ("0"+Math.floor(tis%3600%60||0)).slice(-2);
-  let min = ("0"+Math.floor(tis%3600/60||0)).slice(-2);
-  let std = ("0"+Math.floor(tis/3600||0)).slice(-2);
-
-  return `${std}:${min}:${sec}:${mil}`;
 };
 
 this.removeTime = (indexNo) => {

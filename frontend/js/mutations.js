@@ -1,7 +1,4 @@
 const newMutation = {
-      // 
-      // new mutation here
-      // 
       loadMainTree: (state) => {
         let rawMain = localStorage.getItem(state.mainTreeName);
         if(!rawMain) {
@@ -10,18 +7,6 @@ const newMutation = {
           let testObj = JSON.parse(rawMain);
           if(!testObj.themeList||false) return "data are wrong";
           state.main = testObj;
-          // for(let tl in state.main.themeList) {
-          //   if(state.main.themeList[tl].name===state.main.activeTheme) {
-          //     state.loadedLevel = state.main.themeList[tl].level;
-              // for(let le in state.main.themeList[tl].level) {
-              //   let tmraw = JSON.parse(localStorage.getItem(state.main.themeList[tl].level[le]));
-              //   if(tmraw&&tmraw.name||false) {
-              //     state.timeslist[state.main.themeList[tl].level[le]] = tmraw;
-              //   }
-              // }
-              // console.log("theme list index "+state.main.themeList[tl].level);
-          //   }
-          // }
         }
       },
       saveMainTree: (state) => {
@@ -47,27 +32,6 @@ const newMutation = {
           }
         }
       },
-      // loadLevelTime: (state, levelID) => {
-      //   if(state.timeslist[levelID]||false) {
-      //     return state.timeslist[levelID];
-      //   } else {
-      //     let rawLocal = JSON.prase(localStorage.getItem(levelID));
-      //     if(!rawLocal.name||false) return "your time is brocken";
-      //     state.timeslist[levelID] = rawLocal;
-      //     return state.timeslist[levelID];
-      //   }
-      // },
-      // saveLevelTime: (state, levelID, fullLvlObj) => {
-      //   if(!fullLvlObj||false) return "error in full Level Obj";
-      //   let objStr = JSON.stringify(fullLvlObj);
-      //   localStorage.setItem(levelID, fullLvlObj);
-      // },
-      // addLevelTime: (state, levelID, newTime) => {
-      //   // let newTime = { date-timestamp, time/ms };
-      //   if(!state.timeslist[levelID]||false) return "load the level first";
-      //   if(newTime.time < state.timeslist[levelID].best) state.timeslist[levelID].best = newTime.time;
-      //   state.timeslist[levelID].timeline[newTime.date] = newTime.time;
-      // },
       moveLevelInList: (state, id, dir) => {
         let theme = state.main.themeList.map( e => { return e.name } ).indexOf(state.main.activeTheme);
         let index = state.main.themeList[theme].level.indexOf(id);
@@ -83,8 +47,4 @@ const newMutation = {
         // state.loadedLevel = state.main.themeList[theme].level;
         return "move "+dir+" to index "+to;
       },
-      // 
-      // end of new mutation here
-      // 
     }
-  // }

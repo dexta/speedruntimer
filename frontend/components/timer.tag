@@ -7,7 +7,7 @@
   </div>
   <div class={ 'bg-danger':timeisred, 'bg-success':!timeisred, 'col-2':true, 'bg-transparent':editMode}>
     <blockquote hide={editMode} class="blockquote text-center">
-      {formatTime(time)}
+      {formatTimeSpend(time)}
     </blockquote>
     <blockquote show={editMode} class="blockquote text-center">
       <button class="btn btn-sm btn-primary" onclick={moveUp}>
@@ -19,14 +19,14 @@
     </blockquote>
   </div>
   <div class="col-2">
-    <blockquote class="blockquote text-center">{formatTime(timerOBJ.best)}</blockquote>
+    <blockquote class="blockquote text-center">{formatTimeSpend(timerOBJ.best)}</blockquote>
   </div>
   <div class="col-5">
     <button onclick={start} class="btn btn-success">Start</button>
     <button onclick={pause} class="btn btn-info">Pause</button>
     <button hide={beatthescore||givemestats} onclick={stop} class="btn btn-danger">Stop</button>
     <button show={givemestats} onclick={savestat} class="btn btn-info">SaveStat</button>
-    <button show={beatthescore} onclick={save} class="btn btn-danger">Save</button>
+    <!-- <button show={beatthescore} onclick={save} class="btn btn-danger">Save</button> -->
 
     <button onclick={toggleStats} class="pull-right btn btn-primary">
       <i class="fa fa-line-chart"></i>
@@ -42,6 +42,8 @@
 <script>
 let that = this;
 
+this.formatTimeSpend = formatTimeSpend;
+
 this.timerID = this.opts.namedid;
 this.timerOBJ = {};
 
@@ -50,9 +52,10 @@ this.time = 0;
 this.freq = 50; // time in msec to update
 this.running = false;
 this.timeisred = false;
-this.beatthescore = false;
+// this.beatthescore = false;
 this.givemestats = false;
 this.showChart = false;
+this.showTimeTable = false;
 
 this.lastTime = 0;
 this.startTime = 0;
@@ -76,29 +79,27 @@ this.pause = () => {
     that.startTime = Date.now();
     that.redo();
   }
+  that.givemestats = false;
 };
 
 this.stop = () => {
   if(!that.running) return;
   that.pause();
-  that.beatthescore = (that.time<that.timerOBJ.best||false);
-  if(!that.beatthescore) {
+  // that.beatthescore = (that.time<that.timerOBJ.best||false);
+  // if(!that.beatthescore) {
     that.givemestats = true;
-  }
-  console.log(`Stop ${that.opts.name} at ${that.formatTime(that.time)}`);
+  // }
+  console.log(`Stop ${that.opts.name} at ${formatTimeSpend(that.time)}`);
 };
 
-this.save = () => {
+// this.save = () => {
   // console.log("we do the save dance !");
   // riotux.action('timerList', 'updateTimer', that.timerID, {best:that.time});
   // riotux.action('timerList', 'saveAll');
   // that.savestat();
-
-};
+// };
 
 this.savestat = () => {
-  // console.log("save the stat "+that.formatTime(that.time));
-  // riotux.action('listOfTimes', 'updateTime', that.timerID, that.time);
   let nowD = Date.now()/1;
   that.timerOBJ.timeline[nowD] = that.time;
   saveLevel(that.timerID, that.timerOBJ);
@@ -110,17 +111,6 @@ this.redo = () => {
   that.time = (timeNow-that.startTime)+that.lastTime;
   that.update();
   setTimeout(that.redo, that.freq);
-};
-
-this.formatTime = (toHumanTime) => {
-  let tis = Math.floor(toHumanTime/1000);
-  let mil = toHumanTime%tis||0;
-
-  let sec = ("0"+Math.floor(tis%3600%60||0)).slice(-2);
-  let min = ("0"+Math.floor(tis%3600/60||0)).slice(-2);
-  let std = ("0"+Math.floor(tis/3600||0)).slice(-2);
-
-  return `${std}:${min}:${sec}:${mil}`;
 };
 
 this.moveUp = () => {

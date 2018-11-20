@@ -29,14 +29,14 @@ this.chartOptions = {
         beginAtZero:true,
         callback: function(label, index, labels) {
           
-          return that.formatTime(label);
+          return formatTimeSpend(label);
         }
       }
     }],
     xAxes: [{
       ticks: {
         callback: (label, index, labels) => {
-          return that.formatDate(label);
+          return formatDate(label);
         }
       }
     }]
@@ -69,21 +69,6 @@ this.drawChart = () => {
     data: that.chartData,
     options: that.chartOptions
   });
-};
-
-this.formatDate = (timeinsec) => {
-  return moment(parseInt(timeinsec)).format("YYYY:MM:DD HH:mm:ss");
-};
-
-this.formatTime = (toHumanTime) => {
-  let tis = Math.floor(toHumanTime/1000);
-  let mil = toHumanTime%tis||0;
-
-  let sec = ("0"+Math.floor(tis%3600%60||0)).slice(-2);
-  let min = ("0"+Math.floor(tis%3600/60||0)).slice(-2);
-  let std = ("0"+Math.floor(tis/3600||0)).slice(-2);
-
-  return `${std}:${min}:${sec}:${mil}`;
 };
 
 </script>
