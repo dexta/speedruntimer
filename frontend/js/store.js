@@ -11,19 +11,19 @@ const defaultTimerList = {
       {id:'smbc4dw',name:'Chapter 4 - Dark World',time:0,best:24143423},
     ]
   };
-const MergedMutations = Object.assign({},oldMutation, newMutation);
+// const MergedMutations = Object.assign({},oldMutation, newMutation);
 
 
 let store = riotux.Store({
   state: {
     
-    allTime: 0,
-    timerList: [],
-    listOfTimes: {},
-    theme: 'SuperMeatBoy',
+    // allTime: 0,
+    // timerList: [],
+    // listOfTimes: {},
+    // theme: 'SuperMeatBoy',
     // new struck
     mainTreeName: 'speedrunners',
-    loadedLevel: [],
+    // loadedLevel: [],
     main: {
       // "activeTheme": "Super Meat Boy",
       // "themeList": [
@@ -31,7 +31,7 @@ let store = riotux.Store({
       //   {"name":"Great Giana Sisters","level":["ggslevel01","ggslevel02","ggslevel03","ggslevel04","ggslevel05","ggslevel06","ggslevel07"]}
       // ]
     },
-    "timeslist": {
+    // "timeslist": {
       // "smbc1lw": {
       //   "name": "Chapter 1 - Light World",
       //   "timeline": {
@@ -102,9 +102,9 @@ let store = riotux.Store({
       //   },
       //   "best":24143423,"bgcolor":"bg-secondary"
       // }
-    }
+    // }
   // end of new data struc
   },
-  mutations: MergedMutations
+  mutations: newMutation
 
   });

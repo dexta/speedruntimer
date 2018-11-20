@@ -18,5 +18,5 @@ const saveLevel = (levelID,levelData) => {
     }
   }
   let tstr = JSON.stringify(levelData);
-  return localStorage.setItem(levelID, levelData);
+  return localStorage.setItem(levelID, tstr);
 };

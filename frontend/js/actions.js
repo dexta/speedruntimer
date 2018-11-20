@@ -33,29 +33,29 @@ let action = riotux.Actions({
     // 
     // end new actions here
     // 
-    loadAll: (store, name) => {
-      store.dispatch('loadTimerList', name);
-    },
-    saveAll: (store) => {
-      store.dispatch('saveTimerList');
-    },
-    updateTimer: (store, id, updateObj) => {
-      store.dispatch('updateById', id, updateObj);
-    },
-    updateTime: (store, id, time) => {
-      store.dispatch('updateTimeOfItem', id, time);
-    },
-    loadTime: (store, id) => {
-      return store.dispatch('loadTimeOfItem', id);
-    },
-    saveTimeBlob: (store, id, timesObj) => {
-      return store.dispatch('saveTimeOfItemBlob', id, timesObj);
-    }
+    // loadAll: (store, name) => {
+    //   store.dispatch('loadTimerList', name);
+    // },
+    // saveAll: (store) => {
+    //   store.dispatch('saveTimerList');
+    // },
+    // updateTimer: (store, id, updateObj) => {
+    //   store.dispatch('updateById', id, updateObj);
+    // },
+    // updateTime: (store, id, time) => {
+    //   store.dispatch('updateTimeOfItem', id, time);
+    // },
+    // loadTime: (store, id) => {
+    //   return store.dispatch('loadTimeOfItem', id);
+    // },
+    // saveTimeBlob: (store, id, timesObj) => {
+    //   return store.dispatch('saveTimeOfItemBlob', id, timesObj);
+    // }
   });
   // riotux.action('timerList', 'saveAll');
   // riotux.action('timerList', 'updateTimer', 'smbc3lw', {best:64223});
   // riotux.action('listOfTimes', 'updateTime', id, time);
-  riotux.action('timerList', 'loadAll', 'SuperMeatBoy');
+  // riotux.action('timerList', 'loadAll', 'SuperMeatBoy');
 
 <!-- tmp scripts remove after useing -->
 

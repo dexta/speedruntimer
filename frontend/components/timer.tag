@@ -31,9 +31,13 @@
     <button onclick={toggleStats} class="pull-right btn btn-primary">
       <i class="fa fa-line-chart"></i>
     </button>
+    <button onclick={toggleTable} class="pull-right btn btn-warning">
+      <i class="fa fa-edit"></i>
+    </button>
   </div>
 </div>
-<chartjs if={showChart} cIndex="{timerID}" cTitle="{name}"></chartjs>
+<statTimeEdit if={showTimeTable} cindex="{timerID}"></statTimeEdit>
+<chartjs if={showChart} cIndex="{timerID}" cTitle="{timerOBJ.name}"></chartjs>
 <hr>
 <script>
 let that = this;
@@ -120,17 +124,21 @@ this.formatTime = (toHumanTime) => {
 };
 
 this.moveUp = () => {
-  let canI = riotux.action('loadedLevel', 'moveItemUp', that.timerID);
+  let canI = riotux.action('main', 'moveItemUp', that.timerID);
   console.log(`move up return ${canI}`);
 };
 
 this.moveDown = () => {
-  let canI = riotux.action('loadedLevel', 'moveItemDown', that.timerID);
+  let canI = riotux.action('main', 'moveItemDown', that.timerID);
   console.log(`move down return ${canI}`);
 };
 
 this.toggleStats = () => {
   that.showChart = (that.showChart||that.showChart==='true'||false)? false : true;
+};
+
+this.toggleTable = () => {
+  that.showTimeTable = (that.showTimeTable||that.showChart==='true'||false)? false : true;
 };
 
 this.on("update", () => {

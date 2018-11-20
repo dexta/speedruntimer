@@ -106,6 +106,7 @@ this.saveTime = (indexNo) => {
     if(indexNo===-42) {
       if(that.chartTitle===newTimestamp) return;
       that.listOfTimes.name = newTimestamp;
+      that.chartTitle = newTimestamp;
       saveLevel(that.chartIndex, that.listOfTimes);
       return;
     } else {
