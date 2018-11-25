@@ -40,6 +40,13 @@ this.chartOptions = {
         }
       }
     }]
+  },
+  tooltips: {
+    callbacks: {
+      label: (tooltipItem, data) => {
+        return formatTimeSpend(data.datasets[0].data[tooltipItem.index]);
+      }
+    }
   }
 };
 
