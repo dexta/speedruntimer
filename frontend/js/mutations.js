@@ -44,7 +44,6 @@ const newMutation = {
         }
         let to = (dir==="UP")? index-1 : index+1;
         state.main.themeList[theme].level.splice(to, 0, state.main.themeList[theme].level.splice(index,1)[0]);
-        // state.loadedLevel = state.main.themeList[theme].level;
         return "move "+dir+" to index "+to;
       },
     }

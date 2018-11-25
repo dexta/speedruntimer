@@ -132,7 +132,7 @@ this.toggleTable = () => {
 };
 
 this.on("update", () => {
-  if(that.time>that.bestTime) {
+  if(that.time>that.timerOBJ.best) {
     that.timeisred = true;
   } else {
     that.timeisred = false;
@@ -143,6 +143,17 @@ this.on("update", () => {
 this.on("mount", () => {
   that.timerOBJ = loadLevel(that.timerID);
 });
+
+// this.on('unmount', () => {
+//   riotux.unsubscribe(that);
+//   console.log('hit main umount '+that.timerID);
+// });
+
+// riotux.subscribe(that, 'main', ( state, state_value ) => {
+//   that.update();
+//   console.log('hit main update '+that.timerID);
+// });
+
 
 </script>
 

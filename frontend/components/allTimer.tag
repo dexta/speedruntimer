@@ -37,7 +37,6 @@ this.loaded = {};
 this.themeName = "";
 
 this.importExportShow = false;
-// this.listOfTimers = [];
 
 this.editActive = false;
 
@@ -45,7 +44,7 @@ this.getListOfTimers = () => {
   that.main = riotux.getter('main');
   that.themeName = that.main.activeTheme;
   let tInx = that.main.themeList.map( e=> { return e.name } ).indexOf(that.themeName);
-  that.loaded = that.main.themeList[0].level;
+  that.loaded = that.main.themeList[tInx].level;
   that.update();
 }
 
