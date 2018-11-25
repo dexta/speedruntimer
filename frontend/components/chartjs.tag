@@ -44,7 +44,7 @@ this.chartOptions = {
   tooltips: {
     callbacks: {
       label: (tooltipItem, data) => {
-        return formatTimeSpend(data.datasets[0].data[tooltipItem.index]);
+        return formatTimeSpend(data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index]);
       }
     }
   }
